@@ -1,3 +1,6 @@
+variables:
+  TF_DIR: "infrastructure"
+
 stages:
   - terraform-plan
   - terraform-apply
@@ -5,9 +8,10 @@ stages:
 
 
 terraform-plan:
+  image: hashicorp/terraform:1.8
   stage: terraform-plan
   script:
-    - echo "Terraform Plan"
+    - terraform -chdir=$TF_DIR init
 
 terraform-apply:
   stage: terraform-apply
