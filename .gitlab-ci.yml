@@ -22,7 +22,7 @@ terraform-plan:
       - infrastructure/terraform.tfstate
 
 terraform-apply:
-  image: 
+  image:  
     name: hashicorp/terraform:1.8
     entrypoint:
       - '/usr/bin/env'
