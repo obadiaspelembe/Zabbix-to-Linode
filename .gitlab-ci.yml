@@ -49,7 +49,11 @@ terraform-destroy:
 
 ansible-deploy:
   stage: ansible-deploy
+  image:
+    name: jfxs/ansible
+  variables:
+    - ANSIBLE_HOST_KEY_CHECKING: "False"
   needs:
     - terraform-apply
   script:
-    - cat hosts
+    - ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i hosts -e 'ansible_user=root' -e 'ansible_password=$TF_VAR_root_pass' playbook.yml
