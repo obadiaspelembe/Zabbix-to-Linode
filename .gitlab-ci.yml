@@ -16,10 +16,11 @@ terraform-plan:
   stage: terraform-plan
   script:
     - terraform -chdir=$TF_DIR init
-    - terraform -chdir=$TF_DIR plan
-  artifacts:
-    paths:
-      - infrastructure/terraform.tfstate
+    - terraform -chdir=$TF_DIR plan -out "plan.tfplan"
+    - ls
+  # artifacts:
+  #   paths:
+  #     - infrastructure/*
 
 terraform-apply:
   image:  
@@ -30,6 +31,7 @@ terraform-apply:
   stage: terraform-apply
   script:
     - echo "Terraform apply"
+  when: manual
 
 terraform-destroy:
   stage: terraform-destroy
