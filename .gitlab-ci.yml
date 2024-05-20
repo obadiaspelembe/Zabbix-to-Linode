@@ -50,9 +50,7 @@ terraform-destroy:
 ansible-deploy:
   stage: ansible-deploy
   image:
-    name: jfxs/ansible
-  variables:
-    - ANSIBLE_HOST_KEY_CHECKING: "False"
+    name: jfxs/ansible 
   needs:
     - terraform-apply
   script:
