@@ -19,7 +19,7 @@ terraform-plan:
     - terraform -chdir=$TF_DIR plan
   artifacts:
     paths:
-      - infrastructure/*.tfstate
+      - infrastructure/terraform.tfstate
 
 terraform-apply:
   image: 
