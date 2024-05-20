@@ -31,7 +31,7 @@ terraform-apply:
   stage: terraform-apply
   script:
     - terraform -chdir=$TF_DIR init
-    - terraform -chdir="infrastructure" apply "plan.tfplan" -auto-approve
+    - terraform -chdir="infrastructure" apply -auto-approve "plan.tfplan" 
   when: manual
 
 terraform-destroy:
