@@ -18,9 +18,9 @@ terraform-plan:
     - terraform -chdir=$TF_DIR init
     - terraform -chdir=$TF_DIR plan -out "plan.tfplan"
     - ls $TF_DIR 
-  # artifacts:
-  #   paths:
-  #     - infrastructure/*
+  artifacts:
+    paths:
+      - *.tfplan
 
 terraform-apply:
   image:  
