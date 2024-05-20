@@ -30,7 +30,8 @@ terraform-apply:
       - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
   stage: terraform-apply
   script:
-    - echo "Terraform apply"
+    - terraform -chdir=$TF_DIR init
+    - terraform -chdir="infrastructure" apply "plan.tfplan" --auto-approve
   when: manual
 
 terraform-destroy:
