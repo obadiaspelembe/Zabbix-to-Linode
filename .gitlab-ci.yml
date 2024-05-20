@@ -4,18 +4,18 @@ stages:
   - terraform-destroy
 
 
-terraform-plan
+terraform-plan:
   stage: terraform-plan
   script:
     - echo "Terraform Plan"
 
-terraform-apply
+terraform-apply:
   stage: terraform-apply
   script:
     - echo "Terraform apply"
 
-terraform-destroy
-stage: terraform-destroy
-script:
-  - echo "Terraform destroy"
+terraform-destroy:
+  stage: terraform-destroy
+  script:
+    - echo "Terraform destroy"
 
