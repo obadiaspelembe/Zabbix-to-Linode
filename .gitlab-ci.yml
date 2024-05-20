@@ -20,7 +20,7 @@ terraform-plan:
     - ls $TF_DIR 
   artifacts:
     paths:
-      - *.tfplan
+      - "*.tfplan"
 
 terraform-apply:
   image:  
