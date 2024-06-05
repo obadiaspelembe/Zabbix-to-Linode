@@ -1,1 +1,1 @@
-ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i hosts -e 'ansible_user=root' -e 'ansible_password=50Wh04m1N0w*' -e 'github_repo=https://github.com/obadiaspelembe/monolithic-api.git' playbook.yml
+ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -u root -i hosts -e 'ansible_user=root' -e 'ansible_password=PASSWORD' -e 'github_repo=https://github.com/obadiaspelembe/monolithic-api.git' playbook.yml
