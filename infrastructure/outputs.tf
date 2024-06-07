@@ -8,7 +8,7 @@ output "server_host" {
 }
 
 output "linode_password" {
-  value = linode_instance.web.root_pass
+  value = random_password.linode_password.result
   description = "linode instance root password"
   sensitive = true
 }

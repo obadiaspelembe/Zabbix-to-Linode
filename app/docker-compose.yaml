@@ -1,4 +1,3 @@
-version: '3.8'
 services:
  zabbix-web-service:
   extends:
@@ -33,7 +32,9 @@ services:
   labels:
    com.zabbix.os: "${ALPINE_OS_TAG}"
 
- zabbix-agent:
+ zabbix-agent:  
+  depends_on:
+      - zabbix-server
   extends:
    file: zabbix/components.yaml
    service: agent
@@ -82,9 +83,6 @@ networks:
     ipam:
       driver: "${DATABASE_NETWORK_DRIVER}"
 
-volumes:
-  snmptraps:
-#  dbsocket:
 
 secrets:
   POSTGRES_USER:

@@ -31,15 +31,11 @@
     - name: Copy file with owner and permissions
       ansible.builtin.copy:
         src: ./app
-        dest: /www/var/zabbix
-    # - name: Clone Monolithic-API repo
-    #   git:
-    #     repo: "{{ github_repo }}"
-    #     dest: monolithic-api
+        dest: /www/var/zabbix 
 
     - name: Install docker-compose 
       get_url: 
-        url : https://github.com/docker/compose/releases/download/1.25.1-rc1/docker-compose-Linux-x86_64
+        url : https://github.com/docker/compose/releases/download/v2.27.1/docker-compose-linux-x86_64
         dest: /usr/local/bin/docker-compose
         mode: 'u+x,g+x'
     

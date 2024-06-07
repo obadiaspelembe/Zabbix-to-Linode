@@ -1,4 +1,3 @@
-version: '3.8'
 services:
  postgres-server:
   image: "${POSTGRESQL_IMAGE}:${POSTGRESQL_IMAGE_TAG}"

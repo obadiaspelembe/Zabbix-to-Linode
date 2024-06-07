@@ -2,3 +2,6 @@
 *.tfvars
 *.terraform*
 *.tfstate*
+.server_host
+hosts
+.credentials
