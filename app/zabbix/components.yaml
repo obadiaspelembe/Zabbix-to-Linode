@@ -1,4 +1,3 @@
-version: '3.8'
 services:
  server:
   ports:
@@ -13,8 +12,7 @@ services:
    - ${DATA_DIRECTORY}/var/lib/zabbix/modules:/var/lib/zabbix/modules:ro
    - ${DATA_DIRECTORY}/var/lib/zabbix/enc:/var/lib/zabbix/enc:ro
    - ${DATA_DIRECTORY}/var/lib/zabbix/ssh_keys:/var/lib/zabbix/ssh_keys:ro
-   - ${DATA_DIRECTORY}/var/lib/zabbix/mibs:/var/lib/zabbix/mibs:ro
-   - snmptraps:/var/lib/zabbix/snmptraps:ro
+   - ${DATA_DIRECTORY}/var/lib/zabbix/mibs:/var/lib/zabbix/mibs:ro 
   tmpfs: /tmp
   ulimits:
    nproc: 65535
@@ -74,9 +72,7 @@ services:
    com.zabbix.description: "Zabbix server with PostgreSQL database support"
    com.zabbix.dbtype: "pgsql"
 
- proxy:
-  profiles:
-   - all
+ proxy: 
   restart: "${RESTART_POLICY}"
   volumes:
    - /etc/localtime:/etc/localtime:ro
@@ -84,8 +80,7 @@ services:
    - ${DATA_DIRECTORY}/var/lib/zabbix/modules:/var/lib/zabbix/modules:ro
    - ${DATA_DIRECTORY}/var/lib/zabbix/enc:/var/lib/zabbix/enc:ro
    - ${DATA_DIRECTORY}/var/lib/zabbix/ssh_keys:/var/lib/zabbix/ssh_keys:ro
-   - ${DATA_DIRECTORY}/var/lib/zabbix/mibs:/var/lib/zabbix/mibs:ro
-   - snmptraps:/var/lib/zabbix/snmptraps:ro
+   - ${DATA_DIRECTORY}/var/lib/zabbix/mibs:/var/lib/zabbix/mibs:ro 
   tmpfs: /tmp
   ulimits:
    nproc: 65535
@@ -118,9 +113,7 @@ services:
    com.zabbix.company: "Zabbix LLC"
    com.zabbix.component: "zabbix-proxy"
 
- web-apache:
-  profiles:
-   - all
+ web-apache: 
   ports:
    - "${ZABBIX_WEB_APACHE_HTTP_PORT}:8080"
    - "${ZABBIX_WEB_APACHE_HTTPS_PORT}:8443"
@@ -237,13 +230,13 @@ services:
    com.zabbix.description: "Zabbix frontend on Nginx web-server with PostgreSQL database support"
    com.zabbix.dbtype: "pgsql"
 
- agent:
-  profiles:
-   - full
-   - all
+ agent:  
   ports:
-   - "${ZABBIX_AGENT_PORT}:10050"
+   - "10080:10050"
+   - "10050:10050"
   restart: "${RESTART_POLICY}"
+  privileged: true
+  pid: "host" 
   volumes:
    - /etc/localtime:/etc/localtime:ro
    - ${DATA_DIRECTORY}/etc/zabbix/zabbix_agentd.d:/etc/zabbix/zabbix_agentd.d:ro
@@ -261,9 +254,7 @@ services:
       memory: 64M
    mode: global
   env_file:
-   - ${ENV_VARS_DIRECTORY}/.agent
-  privileged: true
-  pid: "host"
+   - ${ENV_VARS_DIRECTORY}/.agent 
   networks:
    zbx_net_backend:
     aliases:
@@ -275,44 +266,7 @@ services:
    com.zabbix.company: "Zabbix LLC"
    com.zabbix.component: "zabbix-agentd"
 
- snmptraps:
-# Override snmptrapd command arguments to receive SNMP traps by DNS
-# It must be done with ZBX_SNMP_TRAP_USE_DNS=true environment variable
-#  command: /usr/sbin/snmptrapd -C -c /etc/snmp/snmptrapd.conf -Lo -A
-  profiles:
-   - full
-   - all
-  ports:
-   - "${ZABBIX_SNMPTRAPS_PORT}:1162/udp"
-  restart: "${RESTART_POLICY}"
-  volumes:
-   - snmptraps:/var/lib/zabbix/snmptraps:rw
-  tmpfs: /tmp
-  deploy:
-   resources:
-    limits:
-      cpus: '0.5'
-      memory: 256M
-    reservations:
-      cpus: '0.25'
-      memory: 128M
-  env_file:
-   - ${ENV_VARS_DIRECTORY}/.snmptraps
-  networks:
-   zbx_net_frontend:
-    aliases:
-     - zabbix-snmptraps
-   zbx_net_backend:
-  stop_grace_period: 5s
-  labels:
-   com.zabbix.description: "Zabbix snmptraps"
-   com.zabbix.company: "Zabbix LLC"
-   com.zabbix.component: "snmptraps"
-
- web-service:
-  profiles:
-   - full
-   - all
+ web-service: 
   ports:
    - "${ZABBIX_WEB_SERVICE_PORT}:10053"
   restart: "${RESTART_POLICY}"
@@ -320,7 +274,7 @@ services:
    - ${DATA_DIRECTORY}/var/lib/zabbix/enc:/var/lib/zabbix/enc:ro
   tmpfs: /tmp
   security_opt:
-   - seccomp:${ENV_VARS_DIRECTORY}/chrome_dp.json
+   - seccomp:${CRED_DIRECTORY}/chrome_dp.json
   deploy:
    resources:
     limits:
